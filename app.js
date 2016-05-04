@@ -5,7 +5,7 @@ var path = require('path');
 var sassMiddleware = require('node-sass-middleware');
 var usernames = [];
 
-server.listen(80);
+server.listen(3000);
 console.log('Servidor arriba...puerto 80');
 
 //compila sass
