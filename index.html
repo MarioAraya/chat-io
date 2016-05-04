@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>CHAT-IO</title>
+	<link rel="stylesheet" type="text/css" href="/estilo.css">
+</head>
+<body>
+	<div id="container">		
+		<div id="nombresWrapper">
+			<h2>CHAT IO pulento</h2>
+			<p>Crear nombre de usuario:</p>
+			<div id="error"></div>
+			<form id="formUsername">
+				<input type="text" size="35" id="nombreUsuario">
+				<input type="submit" value="Ok">
+			</form>
+		</div>
+
+		<div id="wrapperMain">
+			<h2>CHAT-IO</h2>
+			<div id="chatWrapper">
+				<div id="chatWindow"></div>
+				<form id="msgForm">
+					<input type="text" size="35" id="msg" placeHolder="Escribe algo...">
+					<input type="submit" value="Ok">
+				</form>	
+			</div>
+
+			<div id="userWrapper">
+				<div id="usuarios"></div>
+			</div>
+		</div>
+	</div>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	  $(function(){
+  			var socket = io.connect();
+  			var $msgForm = $("#msgForm");
+  			var $msg = $("#msg");
+  			var $chat = $("#chatWindow");
+  			var $usernameForm = $("#formUsername");
+  			var $username = $("#nombreUsuario");
+  			var $error = $("#error");
+  			var $usuarios = $("#usuarios");
+
+  			$usernameForm.submit(function(e){
+				e.preventDefault();
+				socket.emit('nuevo user', $username.val(), function(data){
+					if(data){
+						$("#wrapperMain").show();
+						$("#nombresWrapper").hide();
+					}
+					else{
+						$error.html('Nombre de usuario ya ocupado');
+					}
+				});
+  			});
+
+  			socket.on('usernames', function(data){
+  				var html = '';
+  				for(i = 0; i<data.length; i++){
+  					html += data[i] + '<BR>';  					
+  				}
+  				$usuarios.html(html);
+  			});
+
+  			$msgForm.submit(function(e){
+				e.preventDefault();
+				socket.emit('enviar msg', $msg.val());
+				$msg.val('');
+  			});
+
+  			socket.on('nuevo msg', function(data){
+  				$chat.append('<strong>' +data.user + '</strong>: ' + data.msg + '<br>');  				
+  			});
+	  });
+	</script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+{
+  "name": "chat-io",
+  "version": "1.0.0",
+  "description": "App demo de socket.io\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[D\u001b[Dchat \u001b[2~demo de socket.io",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "mario araya romero",
+  "license": "ISC",
+  "dependencies": {
+  	"socket.io": "*",
+  	"express": "*"
+  }
+}
