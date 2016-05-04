@@ -2,7 +2,7 @@
 <html>
 <head>
 	<title>CHAT-IO</title>
-	<link rel="stylesheet" type="text/css" href="/estilo.css">
+	<link rel="stylesheet" type="text/css" href="/estilo2.css">
 </head>
 <body>
 	<div id="container">		
@@ -21,7 +21,7 @@
 			<div id="chatWrapper">
 				<div id="chatWindow"></div>
 				<form id="msgForm">
-					<input type="text" size="35" id="msg" placeHolder="Escribe algo...">
+					<input type="text" size="35" id="msg" placeHolder="Escribe algo..." autocomplete="false">
 					<input type="submit" value="Ok">
 				</form>	
 			</div>
@@ -34,6 +34,29 @@
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.3.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script>
+	  jQuery(function($) {
+
+		  var _oldShow = $.fn.show;
+
+		  $.fn.show = function(speed, oldCallback) {
+		    return $(this).each(function() {
+		      var obj         = $(this),
+		          newCallback = function() {
+		            if ($.isFunction(oldCallback)) {
+		              oldCallback.apply(obj);
+		            }
+		            obj.trigger('afterShow');
+		          };
+
+		      // you can trigger a before show if you want
+		      obj.trigger('beforeShow');
+
+		      // now use the old function to show the element passing the new callback
+		      _oldShow.apply(obj, [speed, newCallback]);
+		    });
+		  }
+		});
+
 	  $(function(){
   			var socket = io.connect();
   			var $msgForm = $("#msgForm");
@@ -43,13 +66,16 @@
   			var $username = $("#nombreUsuario");
   			var $error = $("#error");
   			var $usuarios = $("#usuarios");
-
+  			var $nombresWrapper = $("#nombresWrapper");
+			
+  			$username.focus();
   			$usernameForm.submit(function(e){
 				e.preventDefault();
 				socket.emit('nuevo user', $username.val(), function(data){
 					if(data){
 						$("#wrapperMain").show();
 						$("#nombresWrapper").hide();
+						$("#msg").focus();
 					}
 					else{
 						$error.html('Nombre de usuario ya ocupado');
@@ -75,6 +101,7 @@
   				$chat.append('<strong>' +data.user + '</strong>: ' + data.msg + '<br>');  				
   			});
 	  });
+
 	</script>
 </body>
 </html>

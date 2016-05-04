@@ -2,10 +2,20 @@ var app = require('express')();
 var server = require('http').Server(app);
 var io = require('socket.io')(server);
 var path = require('path');
+var sassMiddleware = require('node-sass-middleware');
 var usernames = [];
 
 server.listen(80);
 console.log('Servidor arriba...puerto 80');
+
+//compila sass
+app.use(
+	sassMiddleware({
+	    src: __dirname + '/public', 
+	    dest: __dirname + '/public',
+	    debug: true,       
+	})
+); 
 
 app.use(require('express').static(path.join(__dirname, 'public')));
 

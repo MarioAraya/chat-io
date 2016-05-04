@@ -1,0 +1,39 @@
+//colors
+$color_alabaster_approx: #f9f9f9;
+$color_celeste_approx: #ccc;
+$wild_sand: #f4f4f4;
+
+body {
+	background: $color_alabaster_approx;
+}
+#container {
+	width: 700px;
+	margin: 0 auto;
+}
+#chatWindow {
+	height: 300px;
+}
+#wrapperMain {
+	display: none;
+}
+#chatWrapper {
+	float: left;
+	border: 1px $color_celeste_approx solid;
+	border-radius: 10px;
+	background: $wild_sand;
+	padding: 10px;
+}
+#userWrapper {
+	@extend #chatWrapper;
+	margin-left: 20px;
+	width: 150px;
+	max-height: 200px;
+}
+#nombresWrapper {
+	@extend #chatWrapper;
+	margin-left: 20px;
+}
+input {
+	height: 30px;
+	border: 1px solid;
+}
