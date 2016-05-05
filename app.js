@@ -5,8 +5,7 @@ var path = require('path');
 var sassMiddleware = require('node-sass-middleware');
 var usernames = [];
 
-server.listen(3000);
-console.log('Servidor arriba...puerto 80');
+
 
 //compila sass
 app.use(
@@ -59,3 +58,6 @@ io.on('connection', function (socket) {
    		updateUsernames(); 	
   	});
 });
+
+server.listen(3000);
+console.log('Servidor arriba...puerto 3000');
